@@ -221,10 +221,15 @@ const GardenPlant = ({ plant, setViewPlant }) => {
       .unwrap()
       .then((data) => {
         console.log(data);
+        alert('Plant removed');
+        window.location.reload();
       })
       .catch((err) => {
         console.error(err);
         alert('An error occured');
+      })
+      .finally(() => {
+        setOptions(false);
       });
   };
 
@@ -238,10 +243,11 @@ const GardenPlant = ({ plant, setViewPlant }) => {
       .catch((err) => {
         console.error(err);
         alert('An error occured');
+      })
+      .finally(() => {
+        setOptions(false);
       });
   };
-
-  console.log(plant);
 
   return (
     <div className="relative">

@@ -1,5 +1,5 @@
 const Menu = ({ markWatered, deletePlant }) => (
-  <ul className="absolute text-sm bottom-[20px] menu bg-white rounded-lg border border-gray-200 w-56">
+  <ul className="absolute z-[100] text-sm bottom-[20px] menu bg-white rounded-lg border border-gray-200 w-56">
     <li
       className="flex items-center gap-x-5 hover:cursor-pointer p-3 hover:bg-gray-100"
       onClick={markWatered}
