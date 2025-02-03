@@ -13,7 +13,10 @@ const api = createApi({
       return headers;
     },
     credentials: 'include',
+    timeout: 30000,
   }),
+  refetchOnReconnect: true,
+  tagTypes: ['Auth', 'Gardens', 'Plants'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (body) => ({
@@ -28,12 +31,14 @@ const api = createApi({
         method: 'POST',
         body,
       }),
+      providesTags: ['Auth'],
     }),
     gardens: builder.query({
       query: () => ({
         url: '/garden/',
         method: 'GET',
       }),
+      providesTags: ['Gardens'],
     }),
     createGarden: builder.mutation({
       query: (body) => ({
@@ -41,12 +46,14 @@ const api = createApi({
         method: 'POST',
         body,
       }),
+      invalidatesTags: ['Gardens'],
     }),
     plants: builder.query({
       query: () => ({
         url: '/plants/',
         method: 'GET',
       }),
+      providesTags: ['Plants'],
     }),
     getPlant: builder.query({
       query: (id) => ({
@@ -59,6 +66,7 @@ const api = createApi({
         url: `/plants/${id}/`,
         method: 'DELETE',
       }),
+      invalidatesTags: ['Plants'],
     }),
   }),
 });
