@@ -18,6 +18,7 @@ import Register from './pages/Register.jsx';
 import Dashboard from './pages/Dashboard.jsx';
 import AppLayout from './layouts/AppLayout.jsx';
 import GardenLayout from './layouts/GardenLayout.jsx';
+import Garden from './pages/Garden.jsx';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -30,9 +31,8 @@ const router = createBrowserRouter(
         <Route element={<AppLayout />}>
           <Route path="/dashboard" element={<Dashboard />} />
         </Route>
-
         <Route element={<GardenLayout />}>
-          
+          <Route path="/garden/:id" element={<Garden />} />
         </Route>
       </Route>
     </Route>

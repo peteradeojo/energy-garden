@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 
 const GardenLink = ({ garden }) => {
   return (
-    <Link to={`/gardens/${garden.id}`} className="flex bg-[#D9D9D9] hover:cursor-pointer hover:bg-gray-300 duration-200 rounded-md justify-between  items-center">
+    <Link to={`/garden/${garden.id}`} className="flex bg-[#D9D9D9] hover:cursor-pointer hover:bg-gray-300 duration-200 rounded-md justify-between  items-center">
       <img src={checker} width={100} className="rounded-md" />
       <div className="grid gap-y-1">
         <p className="font-bold text-xl">{garden?.name || 'Garden name'}</p>

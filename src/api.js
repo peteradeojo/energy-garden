@@ -61,12 +61,20 @@ const api = createApi({
         method: 'GET',
       }),
     }),
-    deletePlant: builder.mutation({
+    removeFromGarden: builder.mutation({
       query: (id) => ({
-        url: `/plants/${id}/`,
+        url: `/garden-plants/${id}/`,
         method: 'DELETE',
       }),
-      invalidatesTags: ['Plants'],
+      invalidatesTags: ['Plants', 'Gardens'],
+    }),
+    addToGarden: builder.mutation({
+      query: (body) => ({
+        url: '/garden-plants/',
+        method: 'POST',
+        body,
+      }),
+      invalidatesTags: ['Plants', 'Gardens'],
     }),
   }),
 });
@@ -78,7 +86,8 @@ export const {
   useCreateGardenMutation,
   usePlantsQuery,
   useGetPlantQuery,
-  useDeletePlantMutation,
+  useRemoveFromGardenMutation,
+  useAddToGardenMutation,
 } = api;
 
 export default api;
