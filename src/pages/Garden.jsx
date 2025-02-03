@@ -79,7 +79,7 @@ const AddPlantModal = ({ hook }) => {
   const garden = useContext(GardenContext);
 
   return (
-    <div className="duration-200 w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] grid place-items-center">
+    <div className="duration-200 w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] grid place-items-center z-[10000]">
       <div className="w-2/3 p-2 bg-white text-black opacity-100 overflow-y-auto max-h-2/3">
         <div className="flex justify-between items-center px-default py-4">
           <p className="text-xl font-bold">Add a Plant</p>
