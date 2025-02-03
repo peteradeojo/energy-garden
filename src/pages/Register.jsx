@@ -38,11 +38,15 @@ const Register = () => {
               e.preventDefault();
               const form = formRef.current;
 
-              const formData = new FormData(form);
+              // const formData = new FormData(form);
+              // formData.append('confirm_password', form.password.value);
 
-              formData.append('confirm_password', form.password.value);
-
-              register(formData)
+              register({
+                email: form.email.value,
+                username: form.username.value,
+                password: form.password.value,
+                confirm_password: form.password.value,
+              })
                 .unwrap()
                 .then((data) => {
                   console.log(data);

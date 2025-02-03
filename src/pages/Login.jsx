@@ -1,13 +1,13 @@
-import { useState } from 'react';
-import { Link } from 'react-router';
+import { useRef, useState } from 'react';
+import { Link, useNavigate } from 'react-router';
+import { useGetTokenMutation } from '../api';
 
 const Login = () => {
-  const [form, setForm] = useState({
-    email: '',
-    username: '',
-    password: '',
-    confirm_password: '',
-  });
+  const navigate = useNavigate();
+
+  const formRef = useRef(null);
+
+  const [login, { isLoading }] = useGetTokenMutation();
 
   return (
     <>
@@ -26,17 +26,46 @@ const Login = () => {
           <div className="py-4"></div>
           <div className="py-4"></div>
 
-          <form className="w-2/3 m-auto grid">
-            <label>E-mail</label>
-            <input type="text" className="input" placeholder="E-mail" />
-            <div className="py-4"></div>
+          <form
+            className="w-2/3 m-auto grid"
+            onSubmit={(e) => {
+              e.preventDefault();
 
+              const form = formRef.current;
+
+              login({
+                username: form.username.value,
+                password: form.password.value,
+              })
+                .unwrap()
+                .then((data) => {
+                  console.log(data);
+                  localStorage.setItem('auth', JSON.stringify(data));
+                  navigate('/dashboard');
+                })
+                .catch((err) => {
+                  console.error(err);
+                  alert('Unable to login. Please try again later.');
+                });
+            }}
+            ref={formRef}
+          >
             <label>Username</label>
-            <input type="text" className="input" placeholder="Username" />
+            <input
+              type="text"
+              className="input"
+              name="username"
+              placeholder="Username"
+            />
             <div className="py-4"></div>
 
             <label>Password</label>
-            <input type="password" className="input" placeholder="Password" />
+            <input
+              type="password"
+              className="input"
+              name="password"
+              placeholder="Password"
+            />
             <div className="py-4"></div>
 
             <button className="w-full input-btn py-3 font-semibold">

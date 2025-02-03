@@ -4,6 +4,12 @@ const api = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: 'https://garden-planner-yyug.onrender.com/api/',
     prepareHeaders: (headers) => {
+      const auth = localStorage.getItem('auth');
+      if (!auth) return headers;
+
+      const tokens = JSON.parse(auth);
+      headers.append('Authorization', `Bearer ${tokens.access}`);
+
       return headers;
     },
     credentials: 'include',
@@ -11,21 +17,60 @@ const api = createApi({
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (body) => ({
-        url: '/register',
+        url: '/register/',
         body,
-        method: 'POST'
+        method: 'POST',
       }),
     }),
     getToken: builder.mutation({
       query: (body) => ({
-        url: '/token',
+        url: '/token/',
         method: 'POST',
         body,
+      }),
+    }),
+    gardens: builder.query({
+      query: () => ({
+        url: '/garden/',
+        method: 'GET',
+      }),
+    }),
+    createGarden: builder.mutation({
+      query: (body) => ({
+        url: '/garden/',
+        method: 'POST',
+        body,
+      }),
+    }),
+    plants: builder.query({
+      query: () => ({
+        url: '/plants/',
+        method: 'GET',
+      }),
+    }),
+    getPlant: builder.query({
+      query: (id) => ({
+        url: `/plants/${id}/`,
+        method: 'GET',
+      }),
+    }),
+    deletePlant: builder.mutation({
+      query: (id) => ({
+        url: `/plants/${id}/`,
+        method: 'DELETE',
       }),
     }),
   }),
 });
 
-export const { useRegisterMutation } = api;
+export const {
+  useRegisterMutation,
+  useGetTokenMutation,
+  useGardensQuery,
+  useCreateGardenMutation,
+  usePlantsQuery,
+  useGetPlantQuery,
+  useDeletePlantMutation,
+} = api;
 
 export default api;
