@@ -76,6 +76,13 @@ const api = createApi({
       }),
       invalidatesTags: ['Plants', 'Gardens'],
     }),
+    markWatered: builder.mutation({
+      query: (id) => ({
+        url: `/watering-schedules/${id}/mark-watered/`,
+        method: 'POST',
+      }),
+      invalidatesTags: ['Plants', 'Gardens'],
+    }),
   }),
 });
 
@@ -88,6 +95,7 @@ export const {
   useGetPlantQuery,
   useRemoveFromGardenMutation,
   useAddToGardenMutation,
+  useMarkWateredMutation,
 } = api;
 
 export default api;
