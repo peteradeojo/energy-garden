@@ -68,7 +68,10 @@ const Login = () => {
             />
             <div className="py-4"></div>
 
-            <button className="w-full input-btn py-3 font-semibold">
+            <button
+              disabled={isLoading}
+              className="w-full input-btn py-3 font-semibold"
+            >
               Log In
             </button>
           </form>

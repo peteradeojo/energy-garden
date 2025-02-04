@@ -11,6 +11,12 @@ import {
 import sqr from '../assets/checker.png';
 import drop from '../assets/Waterdrop.svg';
 import sun from '../assets/sunlight.svg';
+
+import seedling from '../assets/seedling.svg';
+import vegetative from '../assets/vegetative.svg';
+import fruiting from '../assets/fruiting.svg';
+import flowering from '../assets/flowering.svg';
+
 import Menu from '../components /Menu';
 
 const PlantView = ({ plant, setViewing }) => {
@@ -169,6 +175,20 @@ const AddPlant = ({ plant, garden, hook }) => {
   );
 };
 
+const GrowthStage = ({ stage }) => {
+  return (
+    <span className="flex items-center gap-x-1">
+      <>
+        {stage == 'Seedling' && <img src={seedling} width={10} />}
+        {stage == 'Fruiting' && <img src={fruiting} width={15} />}
+        {stage == 'Vegetative' && <img src={vegetative} width={15} />}
+        {stage == 'Flowering' && <img src={flowering} width={15} />}
+      </>
+      <span>{stage}</span>
+    </span>
+  );
+};
+
 const AddPlantModal = ({ hook }) => {
   const { data, isLoading, isError, isUninitialized } = usePlantsQuery();
 
@@ -189,12 +209,6 @@ const AddPlantModal = ({ hook }) => {
           </button>
         </div>
 
-        {/* <form
-          onSubmit={(e) => {
-            e.preventDefault();
-          }}
-        >
-        </form> */}
         <div className="grid grid-cols-2 gap-4 px-default">
           {data?.map((plant) => (
             <AddPlant
@@ -210,6 +224,11 @@ const AddPlantModal = ({ hook }) => {
   );
 };
 
+/**
+ *
+ * @param {{plant: {growth_stage: string}}} param0
+ * @returns
+ */
 const GardenPlant = ({ plant, setViewPlant }) => {
   const [options, setOptions] = useState(false);
 
@@ -260,20 +279,31 @@ const GardenPlant = ({ plant, setViewPlant }) => {
         <img src={sqr} className="w-full rounded-3xl" />
       </div>
 
-      <div className="p-4 bg-gray-300 w-full bottom-0 flex justify-between">
-        <div>
+      <div className="p-4 bg-gray-300 w-full bottom-0 grid grid-cols-6 justify-between">
+        <div className="col-span-5">
           <p className="text-xl font-bold">{plant.plant_name}</p>
-          <div className="flex gap-x-1">
-            <span>{plant.quantity}</span>
-            <img src={drop} alt="" />
-            <span>{plant.watering_schedule.frequency_in_days}d</span>
+          <div className="flex gap-x-4 text-xs items-center w-full ">
+            {/* <span>{plant.quantity}</span> */}
+            <span>
+              <GrowthStage
+                stage={(
+                  plant.growth_stage[0] +
+                  plant.growth_stage.substring(1).toLowerCase()
+                ).trim()}
+              />
+            </span>
+
+            <span className="gap-x-1 flex">
+              <img src={drop} width={15} alt="" />
+              <span>{plant.watering_schedule.frequency_in_days}d</span>
+            </span>
           </div>
         </div>
-        <div className="w-1/6 text-center self-start h-full pt-4">
+        <div className="col-span-1 text-center self-start h-full pt-4">
           {options && (
             <Menu
               markWatered={() => {
-                waterPlant(plant.id);
+                waterPlant(plant.watering_schedule.id);
               }}
               deletePlant={() => {
                 deletePlant(plant.id);
