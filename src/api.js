@@ -67,6 +67,7 @@ const api = createApi({
         method: 'DELETE',
       }),
       invalidatesTags: ['Plants', 'Gardens'],
+      providesTags: ['Gardens', 'Plants'],
     }),
     addToGarden: builder.mutation({
       query: (body) => ({
@@ -75,6 +76,7 @@ const api = createApi({
         body,
       }),
       invalidatesTags: ['Plants', 'Gardens'],
+      providesTags: ['Gardens', 'Plants'],
     }),
     markWatered: builder.mutation({
       query: (id) => ({
@@ -82,6 +84,7 @@ const api = createApi({
         method: 'POST',
       }),
       invalidatesTags: ['Plants', 'Gardens'],
+      providesTags: ['Gardens', 'Plants'],
     }),
   }),
 });
