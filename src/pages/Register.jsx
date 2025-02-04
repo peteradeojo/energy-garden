@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { useRegisterMutation } from '../api';
 
 const Register = () => {
@@ -9,6 +9,8 @@ const Register = () => {
     password: '',
     confirm_password: '',
   });
+
+  const navigate = useNavigate();
 
   const formRef = useRef(null);
 
@@ -50,6 +52,8 @@ const Register = () => {
                 .unwrap()
                 .then((data) => {
                   console.log(data);
+                  alert('Registration successful. Please login.');
+                  navigate('/login');
                 })
                 .catch((err) => {
                   console.error(err);
