@@ -6,6 +6,7 @@ import {
   useGetPlantQuery,
   useRemoveFromGardenMutation,
   useMarkWateredMutation,
+  useGetWaterScheduleQuery,
 } from '../api';
 
 import sqr from '../assets/checker.png';
@@ -18,6 +19,28 @@ import fruiting from '../assets/fruiting.svg';
 import flowering from '../assets/flowering.svg';
 
 import Menu from '../components /Menu';
+
+const WaterSchedule = ({ plant }) => {
+  const { data, isLoading } = useGetWaterScheduleQuery(
+    plant.watering_schedule.id
+  );
+
+  return (
+    <div>
+      {isLoading && <>Fetching your water schedule</>}
+      {data && (
+        <>
+          <p>
+            <b>Last watered: </b> {data.last_watered_date}
+          </p>
+          <p>
+            <b>Next Watering date: </b> {data.next_watering_date}
+          </p>
+        </>
+      )}
+    </div>
+  );
+};
 
 const PlantView = ({ plant, setViewing }) => {
   const { data: details, isLoading, isSuccess } = useGetPlantQuery(plant.plant);
@@ -88,19 +111,12 @@ const PlantView = ({ plant, setViewing }) => {
                   </tbody>
                 </table>
               </div>
-
-              <p>
-                <b>Next watering date:</b>{' '}
-                {plant.watering_schedule.next_watering_date}
-              </p>
             </>
           )}
-        </div>
 
-        <div className="px-default pb-8 text-sm">
-          <button className="btn bg-red-400 border-0 duration-200 hover:bg-red-500 text-white">
-            Remove from {plant.garden_name}
-          </button>
+          <div className="pb-8">
+            <WaterSchedule plant={plant} />
+          </div>
         </div>
       </div>
     </div>

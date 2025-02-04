@@ -16,7 +16,7 @@ const api = createApi({
     timeout: 30000,
   }),
   refetchOnReconnect: true,
-  tagTypes: ['Auth', 'Gardens', 'Plants'],
+  tagTypes: ['Auth', 'Gardens', 'Plants', 'Schedule'],
   endpoints: (builder) => ({
     register: builder.mutation({
       query: (body) => ({
@@ -86,6 +86,17 @@ const api = createApi({
       invalidatesTags: ['Plants', 'Gardens'],
       providesTags: ['Gardens', 'Plants'],
     }),
+    getWaterSchedule: builder.query({
+      query: (id) => ({
+        url: `/watering-schedules/${id}/`,
+      }),
+      providesTags: ['Schedule']
+    }),
+    notifications: builder.query({
+      query: () => ({
+        url: '/notifications/',
+      }),
+    }),
   }),
 });
 
@@ -99,6 +110,8 @@ export const {
   useRemoveFromGardenMutation,
   useAddToGardenMutation,
   useMarkWateredMutation,
+  useGetWaterScheduleQuery,
+  useNotificationsQuery,
 } = api;
 
 export default api;
