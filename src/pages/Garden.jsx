@@ -18,7 +18,7 @@ import vegetative from '../assets/vegetative.svg';
 import fruiting from '../assets/fruiting.svg';
 import flowering from '../assets/flowering.svg';
 
-import Menu from '../components /Menu';
+import Menu from '../components/Menu';
 
 const WaterSchedule = ({ plant }) => {
   const { data, isLoading } = useGetWaterScheduleQuery(
