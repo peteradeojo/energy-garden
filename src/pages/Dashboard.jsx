@@ -1,15 +1,24 @@
+import { FiPlusCircle } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router';
-import checker from '../assets/checker.png';
-import { useCreateGardenMutation, useGardensQuery } from '../api';
 import { useEffect, useRef, useState } from 'react';
+import { useGardensQuery, useCreateGardenMutation } from '../api';
+
+import gardenImage from '../assets/garden.png';
+import FormInput from '../components/FormInput';
 
 const GardenLink = ({ garden }) => {
   return (
-    <Link to={`/garden/${garden.id}`} className="flex bg-[#D9D9D9] hover:cursor-pointer hover:bg-gray-300 duration-200 rounded-md justify-between  items-center">
-      <img src={checker} width={100} className="rounded-md" />
+    <Link
+      to={`/garden/${garden.id}`}
+      className="h-[112px] text-[#F1DAC4] flex bg-[#0E402D] hover:cursor-pointer hover:bg-gray-300 duration-200 rounded-md justify-between items-center"
+    >
+      <img src={gardenImage} className="rounded-md" />
       <div className="grid gap-y-1">
         <p className="font-bold text-xl">{garden?.name || 'Garden name'}</p>
-        <p>{garden?.gardenplants.length} plant(s)</p>
+        <p>
+          {garden?.gardenplants.length} plant
+          {garden?.gardenplants.length !== 1 && 's'}
+        </p>
       </div>
       <div className="w-1/6 text-center self-start h-full pt-4">
         <button className="rounded-full duration-200 w-[30px] h-[30px] hover:bg-gray-400 text-lg font-bold">
@@ -47,19 +56,12 @@ const Dashboard = () => {
 
   return (
     <>
-      <p className="text-3xl font-bold">Good Morning, Gardener</p>
-      <div className="py-6"></div>
+      <p className="text-3xl font-bold my-6">
+        Good Morning, <span className="text-[#0E402D]">Gardener</span>
+      </p>
 
       <div className="flex gap-x-4 items-center">
         <h3 className="text-xl font-bold">Your gardens</h3>
-        <button
-          onClick={(e) => {
-            setCreateGarden(!createGarden);
-          }}
-          className="input-btn rounded-full w-[25px] h-[25px]"
-        >
-          {'\u002b'}
-        </button>
       </div>
       {createGarden && (
         <form
@@ -85,19 +87,26 @@ const Dashboard = () => {
           }}
           ref={createRef}
         >
-          <input
+          <FormInput
             type="text"
             name="name"
-            className="input w-full"
-            placeholder="What will you call your garden?"
+            extraInputClass="input w-full"
+            placeholder="Your garden name"
+            style={{ backgroundColor: '#fff' }}
           />
-          <button className="btn bg-black text-white">Save</button>
+          <button className="btn bg-[#0E402D] text-[#F1DAC4] font-medium">
+            Save
+          </button>
         </form>
       )}
-      <div className="grid grid-cols-4 gap-x-8 py-6">
+      <div className="grid grid-cols-3 items-center gap-8 py-6">
         {!isLoading &&
           !isUninitialized &&
           gardens?.map((garden, i) => <GardenLink key={i} garden={garden} />)}
+        <FiPlusCircle
+          className="w-16 h-16 cursor-pointer text-[#0E402D]"
+          onClick={() => setCreateGarden((prev) => !prev)}
+        />
       </div>
     </>
   );

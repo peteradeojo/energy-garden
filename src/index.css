@@ -4,7 +4,6 @@
   font-family: Roboto, Helvetica, Arial, sans-serif;
   /* line-height: 1.5;
   font-weight: 400; */
- 
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -20,14 +19,17 @@ body {
   button {
     cursor: pointer;
   }
-  
+
   .btn {
-    @apply border-black border px-6 py-2;
+    @apply text-green-600 border px-6 py-2 rounded-sm;
+  }
+
+  .btn.btn-primary {
+    @apply bg-green-600 text-white;
   }
 
   .input-btn {
-    background: #d9d9d9;
-    border-radius: 8px;
+    @apply rounded-md;
   }
 
   label {
@@ -38,7 +40,6 @@ body {
     @apply px-4 py-3 bg-[#D9D9D9] rounded-xl;
   }
 }
-
 
 @utility px-default {
   @apply px-[64px];

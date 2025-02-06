@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useRegisterMutation } from '../api';
+import FormInput from '../components/FormInput';
 
 const Register = () => {
   const [form, setForm] = useState({
@@ -18,85 +19,94 @@ const Register = () => {
 
   return (
     <>
-      <div className="grid place-items-center w-dvw h-dvh border">
-        <div className="w-2/3 border p-4">
-          <div className="flex justify-between items-center">
-            <Link to={'/'} className="text-5xl font-extralight">
-              &times;
-            </Link>
-            <h2 className="text-3xl font-bold">Register</h2>
-            <Link to={'/login'} className="input-btn px-4 py-2">
-              Login
-            </Link>
-          </div>
-
-          <div className="py-4"></div>
-          <div className="py-4"></div>
-
-          <form
-            className="w-2/3 m-auto grid"
-            ref={formRef}
-            onSubmit={(e) => {
-              e.preventDefault();
-              const form = formRef.current;
-
-              // const formData = new FormData(form);
-              // formData.append('confirm_password', form.password.value);
-
-              register({
-                email: form.email.value,
-                username: form.username.value,
-                password: form.password.value,
-                confirm_password: form.password.value,
-              })
-                .unwrap()
-                .then((data) => {
-                  console.log(data);
-                  alert('Registration successful. Please login.');
-                  navigate('/login');
-                })
-                .catch((err) => {
-                  console.error(err);
-                  alert('An error occurred.');
-                });
-            }}
+      <div className="h-screen p-4 bg-[#F9F9F9]">
+        <header className="flex justify-center items-center mb-16 relative">
+          <Link
+            to="/"
+            className="text-5xl font-extralight absolute left-0 top-1/2 -translate-y-1/2"
           >
-            <label>E-mail</label>
-            <input
-              type="text"
-              className="input"
-              name="email"
-              placeholder="E-mail"
-            />
-            <div className="py-4"></div>
+            &times;
+          </Link>
+          <h2 className="text-3xl font-bold">Register</h2>
+        </header>
 
-            <label>Username</label>
-            <input
-              type="text"
-              className="input"
-              name="username"
-              placeholder="Username"
-            />
-            <div className="py-4"></div>
+        <form
+          className="w-1/2 m-auto flex flex-col gap-5"
+          ref={formRef}
+          onSubmit={(e) => {
+            e.preventDefault();
+            const form = formRef.current;
 
-            <label>Password</label>
-            <input
-              type="password"
-              className="input"
-              name="password"
-              placeholder="Password"
-            />
-            <div className="py-4"></div>
+            // const formData = new FormData(form);
+            // formData.append('confirm_password', form.password.value);
 
-            <button
-              disabled={isLoading}
-              className="w-full input-btn py-3 font-semibold"
-            >
-              Register
-            </button>
-          </form>
-          <div className="py-4"></div>
-        </div>
+            register({
+              email: form.email.value,
+              username: form.username.value,
+              password: form.password.value,
+              confirm_password: form.password.value,
+            })
+              .unwrap()
+              .then((data) => {
+                console.log(data);
+                alert('Registration successful. Please login.');
+                navigate('/login');
+              })
+              .catch((err) => {
+                console.error(err);
+                alert('An error occurred.');
+              });
+          }}
+        >
+          <FormInput
+            id="email"
+            type="text"
+            name="email"
+            className="input"
+            placeholder="Please enter your email"
+            extraContainerClass="flex-col items-start"
+          >
+            <label htmlFor="email">E-mail</label>
+          </FormInput>
+
+          <FormInput
+            type="text"
+            id="username"
+            name="username"
+            className="input"
+            placeholder="Please enter your username"
+            extraContainerClass="flex-col items-start"
+          >
+            <label htmlFor="username">Username</label>
+          </FormInput>
+
+          <FormInput
+            id="password"
+            type="password"
+            name="password"
+            className="input"
+            placeholder="Please a strong password"
+            extraContainerClass="flex-col items-start"
+          >
+            <label htmlFor="password">Password</label>
+          </FormInput>
+
+          <button
+            disabled={isLoading}
+            className="btn btn-primary w-full input-btn py-3 font-semibold"
+          >
+            Register
+          </button>
+        </form>
+
+        <p className="text-center pt-4">
+          Already have account?&nbsp;
+          <Link to="/login" className="text-green-700 underline">
+            Login
+          </Link>
+        </p>
+
+        <div className="fixed bottom-0 left-0 w-[300px] h-[411px] bg-contain bg-no-repeat bg-[url(./assets/flowers.png)]" />
       </div>
     </>
   );

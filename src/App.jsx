@@ -1,6 +1,7 @@
 import { Link } from 'react-router';
+import { PiFlowerLotus } from 'react-icons/pi';
 
-import image from './assets/generic-img.png';
+import image from './assets/family.png';
 import imageSqr from './assets/generic-square.png';
 import boxSvg from './assets/Vector.svg';
 import Stars from './assets/Stars.png';
@@ -18,9 +19,11 @@ const App = () => {
   return (
     <>
       {/* Navigation bar */}
-      <div className="flex justify-between items-center py-6 px-default border-b border-black w-full">
+      <nav className="sticky top-0 bg-white flex justify-between items-center py-6 px-default border-b border-black w-full">
         <div className="flex gap-x-12 items-center">
-          <p className="text-3xl">Logo</p>
+          <Link to="/" className="text-3xl">
+            <PiFlowerLotus className="w-14 h-14 text-green-600" />
+          </Link>
           <ul className="flex gap-x-4">
             <li className="p-4">Garden Planner</li>
             <li className="p-4">Plant Care</li>
@@ -30,14 +33,14 @@ const App = () => {
         </div>
 
         <div className="flex items-center gap-x-6">
-          <Link to="/login" className="btn text-black">
+          <Link to="/login" className="btn">
             Login
           </Link>
-          <Link to="/explore" className="btn bg-black text-white">
+          <Link to="/explore" className="btn btn-primary">
             Explore
           </Link>
         </div>
-      </div>
+      </nav>
 
       {/* Hero section */}
       <div className="w-full px-default">
@@ -50,7 +53,9 @@ const App = () => {
         </p>
 
         <div className="flex gap-x-3 py-5">
-          <button className="btn bg-black text-white">Get Started</button>
+          <Link to="/register" className="btn btn-primary text-white">
+            Get Started
+          </Link>
           <button className="btn">Learn More</button>
         </div>
 
@@ -105,7 +110,7 @@ const App = () => {
 
         <div className="flex justify-center items-center gap-x-6">
           <button className="btn">Learn More</button>
-          <Link to={'/register'}>Sign Up &rarr;</Link>
+          <Link to="/register">Sign Up &rarr;</Link>
         </div>
       </div>
 
@@ -124,7 +129,7 @@ const App = () => {
           </p>
           <div className="flex items-center gap-x-6 py-6">
             <button className="btn">Learn More</button>
-            <Link to={'/register'}>Sign Up &rarr;</Link>
+            <Link to="/register">Sign Up &rarr;</Link>
           </div>
         </div>
       </div>
@@ -216,7 +221,7 @@ const App = () => {
 
       <div className="py-12"></div>
 
-      <div className="px-default py-12 grid grid-cols-2 items-center">
+      <div className="px-default py-12 grid grid-cols-2 items-center gap-20">
         <img src={Lightbox} alt="" />
         <div>
           <img src={Stars} alt="" />
@@ -230,7 +235,7 @@ const App = () => {
                 <p className="font-bold text-lg">Emily Gardener</p>
                 <small className="text-lg">Gardener, Homeowner</small>
               </div>
-              <span className='h-[100%] p-1 bg-black'></span>
+              <span className="h-full p-1 bg-black"></span>
             </div>
           </div>
         </div>
