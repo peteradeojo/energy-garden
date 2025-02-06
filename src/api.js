@@ -90,11 +90,24 @@ const api = createApi({
       query: (id) => ({
         url: `/watering-schedules/${id}/`,
       }),
-      providesTags: ['Schedule']
+      providesTags: ['Schedule'],
     }),
     notifications: builder.query({
       query: () => ({
         url: '/notifications/',
+      }),
+    }),
+    markNotificationAsRead: builder.mutation({
+      query: (body) => ({
+        body,
+        method: 'POST',
+        url: '/notifications/',
+      }),
+    }),
+    logout: builder.mutation({
+      query: () => ({
+        method: 'POST',
+        url: '/logout/',
       }),
     }),
   }),
@@ -112,6 +125,8 @@ export const {
   useMarkWateredMutation,
   useGetWaterScheduleQuery,
   useNotificationsQuery,
+  useLogoutMutation,
+  useMarkNotificationAsReadMutation,
 } = api;
 
 export default api;
