@@ -10,7 +10,7 @@ const GardenLink = ({ garden }) => {
   return (
     <Link
       to={`/garden/${garden.id}`}
-      className="h-[112px] text-[#F1DAC4] flex bg-[#0E402D] hover:cursor-pointer hover:bg-gray-300 duration-200 rounded-md justify-between items-center"
+      className="h-[112px] text-[#F1DAC4] flex bg-[#0E402D] hover:cursor-pointer hover:scale-105 duration-200 rounded-2xl justify-between items-center"
     >
       <img src={gardenImage} className="rounded-md" />
       <div className="grid gap-y-1">
