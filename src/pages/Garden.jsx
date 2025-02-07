@@ -46,8 +46,14 @@ const PlantView = ({ plant, setViewing }) => {
   const { data: details, isLoading, isSuccess } = useGetPlantQuery(plant.plant);
 
   return (
-    <div className="duration-200 w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] grid place-items-center z-[10000]">
-      <div className="w-2/3 p-2 bg-white rounded-lg text-black opacity-100 overflow-y-auto max-h-2/3">
+    <div
+      onClick={setViewing(undefined)}
+      className="duration-200 w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] grid place-items-center z-[10000]"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-2/3 p-2 bg-white rounded-lg text-black opacity-100 overflow-y-auto max-h-2/3"
+      >
         <div className="flex justify-between items-center px-default py-4">
           <p className="text-xl font-bold">{plant.plant_name.toUpperCase()}</p>
           <button
@@ -129,17 +135,19 @@ const AddPlant = ({ plant, garden, hook }) => {
 
   return (
     <div key={plant.id}>
-      <p className="text-lg font-bold">{plant.name}</p>
+      <p className="text-lg font-bold text-[#0E402D]">{plant.name}</p>
       <p>{plant.plant_type}</p>
       <div className="text-sm">
         <p>
-          <b>Soil:</b> {plant.soil}
+          <b className="text-[#0E402D]">Soil:</b> {plant.soil}
         </p>
         <p>
-          <b>Water:</b> {plant.water_frequency} times/day
+          <b className="text-[#0E402D]">Water:</b> {plant.water_frequency}&nbsp;
+          times/day
         </p>
         <p>
-          <b>Harvest in:</b> {plant.number_of_days_to_Harvest} days
+          <b className="text-[#0E402D]">Harvest in:</b>&nbsp;
+          {plant.number_of_days_to_Harvest} days
         </p>
 
         {garden?.gardenplants.find((p) => p.plant == plant.id) == undefined ? (
@@ -211,10 +219,16 @@ const AddPlantModal = ({ hook }) => {
   const garden = useContext(GardenContext);
 
   return (
-    <div className="duration-200 w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] grid place-items-center z-[10000]">
-      <div className="w-2/3 p-2 rounded-lg bg-white text-black opacity-100 overflow-y-auto max-h-2/3">
+    <div
+      onClick={() => hook[1](false)}
+      className="duration-200 w-full h-full absolute top-0 left-0 bg-[rgba(0,0,0,0.3)] grid place-items-center z-[10000]"
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="w-2/3 p-2 rounded-lg bg-white text-black opacity-100 overflow-y-auto max-h-2/3"
+      >
         <div className="flex justify-between items-center px-default py-4">
-          <p className="text-xl font-bold">Add a Plant</p>
+          <p className="text-xl font-bold text-[#0E402D]">Add a Plant</p>
           <button
             onClick={(e) => {
               hook[1](false);
@@ -287,6 +301,12 @@ const GardenPlant = ({ plant, setViewPlant }) => {
   return (
     <div className="relative">
       <div
+        hidden={!options}
+        className="fixed inset-0 z-10"
+        onClick={() => setOptions(false)}
+      />
+
+      <div
         className="h-2/5 overflow-clip"
         onClick={(e) => {
           setViewPlant(plant);
@@ -351,7 +371,7 @@ const Garden = () => {
       <div className="py-6">
         {addingPlant && <AddPlantModal hook={[addingPlant, setAddPlant]} />}
         <button
-          className="input-btn bg-black text-white p-2"
+          className="input-btn bg-[#0E402D] text-white p-2"
           onClick={() => {
             setAddPlant(true);
           }}
@@ -370,9 +390,9 @@ const Garden = () => {
           </div>
         ) : (
           <>
-            <div>
-              <p>You have not added any plants to your garden.</p>
-            </div>
+            <p className="mt-4">
+              You have not added any plants to your garden.
+            </p>
           </>
         )}
       </div>

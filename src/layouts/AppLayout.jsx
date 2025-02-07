@@ -1,10 +1,10 @@
+import { CgBell } from 'react-icons/cg';
 import { useMemo, useState } from 'react';
 import { LiaTimesSolid } from 'react-icons/lia';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import { Link, Outlet, useLocation, useNavigate } from 'react-router';
 
-import bell from '../assets/bell.svg';
-import { useLogoutMutation } from '../api';
+import { useLogoutMutation, useNotificationsQuery } from '../api';
 import {
   useHandleReduxQueryError,
   useHandleReduxQuerySuccess,
@@ -27,11 +27,22 @@ const AppLayout = () => {
     },
   ] = useLogoutMutation();
 
+  const {
+    data: notifications = [],
+    error: notificationsError,
+    isError: isNotificationsError,
+  } = useNotificationsQuery();
+
+  const notificationUnread = useMemo(
+    () => notifications.some(({ is_read }) => !is_read),
+    [notifications]
+  );
+
   const handleNavToggle = () => setNavOpened((prev) => !prev);
 
   const navLinks = [
     { name: 'Dashboard', url: '/dashboard' },
-    { name: 'Your gardens', url: '/' },
+    // { name: 'Your gardens', url: '/dashboard' },  // gardens and dashboard are the same page
     { name: 'Your plants', url: '/' },
     { name: 'Notifications', url: '/notifications' },
     { name: 'Profile', url: '/profile' },
@@ -41,6 +52,11 @@ const AppLayout = () => {
   useHandleReduxQuerySuccess({
     isSuccess: isLogoutSuccess,
     onSuccess: () => navigate('/'),
+  });
+
+  useHandleReduxQueryError({
+    error: notificationsError,
+    isError: isNotificationsError,
   });
 
   return (
@@ -57,13 +73,18 @@ const AppLayout = () => {
         >
           <Link
             to="/"
-            className="input-btn px-12 py-2 bg-[#141115] text-white font-semibold"
+            className="input-btn px-12 py-2 bg-[#0E402D] text-white font-semibold"
           >
             Watch our Tutorials
           </Link>
 
-          <Link to="/notifications">
-            <img src={bell} width={20} loading="eager" />
+          <Link
+            to="/notifications"
+            className={`relative block w-8 h-8 after:absolute after:-right-0.5 after:top-0 after:w-1.5 after:h-1.5 after:bg-red-600 after:rounded-[50%] ${
+              notificationUnread || 'after:hidden'
+            }`}
+          >
+            <CgBell className="w-full h-full text-[#0E402D]" />
           </Link>
         </div>
       </header>
