@@ -142,8 +142,8 @@ const AddPlant = ({ plant, garden, hook }) => {
           <b className="text-[#0E402D]">Soil:</b> {plant.soil}
         </p>
         <p>
-          <b className="text-[#0E402D]">Water:</b> {plant.water_frequency}&nbsp;
-          times/day
+          <b className="text-[#0E402D]">Water:</b> Every {plant.water_frequency}
+          &nbsp;days
         </p>
         <p>
           <b className="text-[#0E402D]">Harvest in:</b>&nbsp;
@@ -170,6 +170,7 @@ const AddPlant = ({ plant, garden, hook }) => {
                   .then((data) => {
                     console.log(data);
                     hook[1](false);
+                    location.reload();
                   })
                   .catch((err) => {
                     console.error(err);
